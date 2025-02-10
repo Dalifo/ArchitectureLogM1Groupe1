@@ -1,13 +1,17 @@
 {
-  "name": "untitled",
+  "name": "mars-rover",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "A Mars Rover simulation with a toroidal map",
+  "main": "dist/main.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "test": "jest"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.5.3"
   },
   "private": true
