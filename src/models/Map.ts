@@ -23,13 +23,19 @@ export class Map implements IMap {
         return this.height;
     }
 
+    // Calcule proprement un modulo malgré JS
+    private modulo(num: number, mod: number): number {
+        const valeurRéduiteSignée = (num % mod) % -mod;
+        const valeurNonSignée = valeurRéduiteSignée + mod;
+        return valeurNonSignée % mod;
+    }
+
     // La méthode `wrapPosition` gère le déplacement d'un rover au-delà des limites de la carte.
-    // Si un rover dépasse un bord, il réapparaît de l'autre côté (effet torique).
-    // L'opération `(x + width) % width` permet d'assurer que les coordonnées restent dans les limites.
+    // Utilise `this.modulo` pour éviter les problèmes avec les valeurs négatives.
     wrapPosition(x: number, y: number): { x: number; y: number } {
         return {
-            x: (x + this.width) % this.width,
-            y: (y + this.height) % this.height
+            x: this.modulo(x, this.width),
+            y: this.modulo(y, this.height)
         };
     }
 }
