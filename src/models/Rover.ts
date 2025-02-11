@@ -20,49 +20,44 @@ export class Rover implements IRover {
         this.map = map;
     }
 
-    // Déplace le rover d'une unité vers l'avant dans la direction actuelle
-    public MoveForward(): IRoverState {
+    // Fonction qui calcule la nouvelle position sans modifier l'état du rover
+    private calculateNewPosition(direction: Orientation, step: number): { x: number, y: number } {
         let newX = this.x;
         let newY = this.y;
 
-        switch (this.direction) {
-            case Orientation.North: newY++; break;
-            case Orientation.East:  newX++; break;
-            case Orientation.South: newY--; break;
-            case Orientation.West:  newX--; break;
+        switch (direction) {
+            case Orientation.North: newY += step; break;
+            case Orientation.East:  newX += step; break;
+            case Orientation.South: newY -= step; break;
+            case Orientation.West:  newX -= step; break;
         }
 
-        const newPosition = this.map.wrapPosition(newX, newY);
+        return this.map.wrapPosition(newX, newY);
+    }
+
+    // Fonction qui met à jour la position et retourne l'état
+    private updatePosition(newPosition: { x: number, y: number }): IRoverState {
         this.x = newPosition.x;
         this.y = newPosition.y;
-
         return this.getState();
     }
 
-    // Déplace le rover vers l'arrière par rapport à sa direction actuelle.
+    // Déplacement vers l'avant
+    public MoveForward(): IRoverState {
+        const newPosition = this.calculateNewPosition(this.direction, 1);
+        return this.updatePosition(newPosition);
+    }
+
+    // Déplacement vers l'arrière
     public MoveBackward(): IRoverState {
-        let newX = this.x;
-        let newY = this.y;
-
-        switch (this.direction) {
-            case Orientation.North: newY--; break;
-            case Orientation.East:  newX--; break;
-            case Orientation.South: newY++; break;
-            case Orientation.West:  newX++; break;
-        }
-
-        //  Assure que la position reste dans les limites de la carte.
-
-        const newPosition = this.map.wrapPosition(newX, newY);
-        this.x = newPosition.x;
-        this.y = newPosition.y;
-
-        return this.getState();
+        const newPosition = this.calculateNewPosition(this.direction, -1);
+        return this.updatePosition(newPosition);
     }
 
     // déplace le rover vers la gauche par rapport à sa direction actuelle
     public TurnLeft(): IRoverState {
         this.direction = rotateLeft(this.direction);
+        // Retourne l'état actuel du rover après le déplacement.
         return this.getState();
     }
 
