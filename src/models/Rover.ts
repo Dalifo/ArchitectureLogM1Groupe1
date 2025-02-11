@@ -1,80 +1,41 @@
 import { IRover } from "../interfaces/IRover";
-import { IRoverState } from "../interfaces/IRoverState";
-import { Orientation, rotateLeft, rotateRight } from "../models/Orientation";
+import { Position } from "./Position";
+import { Orientation } from "./Orientation";
 import { IMap } from "../interfaces/IMap";
 
 export class Rover implements IRover {
-    private x: number;
-    private y: number;
-    private direction: Orientation;
+    private readonly position: Position;
     private readonly map: IMap;
 
     constructor(x: number, y: number, direction: Orientation, map: IMap) {
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
         this.map = map;
+        this.position = new Position(x, y, direction);
+        this.logState("Initialized");
     }
 
-    public MoveForward(): IRoverState {
-        let newX = this.x;
-        let newY = this.y;
-
-        switch (this.direction) {
-            case Orientation.North: newY++; break;
-            case Orientation.East:  newX++; break;
-            case Orientation.South: newY--; break;
-            case Orientation.West:  newX--; break;
-        }
-
-        const newPosition = this.map.wrapPosition(newX, newY);
-        this.x = newPosition.x;
-        this.y = newPosition.y;
-
-        return this.getState();
+    public MoveForward(): void {
+        this.position.moveForward(this.map);
+        this.logState("Moved Forward");
     }
 
-    public MoveBackward(): IRoverState {
-        let newX = this.x;
-        let newY = this.y;
-
-        switch (this.direction) {
-            case Orientation.North: newY--; break;
-            case Orientation.East:  newX--; break;
-            case Orientation.South: newY++; break;
-            case Orientation.West:  newX++; break;
-        }
-
-        const newPosition = this.map.wrapPosition(newX, newY);
-        this.x = newPosition.x;
-        this.y = newPosition.y;
-
-        return this.getState();
+    public MoveBackward(): void {
+        this.position.moveBackward(this.map);
+        this.logState("Moved Backward");
     }
 
-    public TurnLeft(): IRoverState {
-        this.direction = rotateLeft(this.direction);
-        return this.getState();
+    public TurnLeft(): void {
+        this.position.turnLeft();
+        this.logState("Turned Left");
     }
 
-    public TurnRight(): IRoverState {
-        this.direction = rotateRight(this.direction);
-        return this.getState();
+    public TurnRight(): void {
+        this.position.turnRight();
+        this.logState("Turned Right");
     }
 
-    public getPosition(): { x: number; y: number } {
-        return { x: this.x, y: this.y };
+    private logState(action: string): void {
+        const { x, y, direction } = this.position.getState();
+        console.log(`[Rover] ${action} → Position: (${x}, ${y}) | Facing: ${direction}`);
     }
-
-    public getDirection(): Orientation {
-        return this.direction;
-    }
-
-    private getState(): IRoverState {
-        return {
-            GetPositionX: () => this.x,
-            GetPositionY: () => this.y,
-            GetOrientation: () => this.direction,
-        };
-    }
+    
 }
