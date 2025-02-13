@@ -52,23 +52,23 @@ export class Rover implements IRover {
   }
   
   // Déplace le rover d'une case vers l'avant
-  public MoveForward(): IRoverState {
+  public moveForward(): IRoverState {
     return this.move(1);
   }
 
   // Déplace le rover d'une case vers l'arrière
-  public MoveBackward(): IRoverState {
+  public moveBackward(): IRoverState {
     return this.move(-1);
   }
 
   // Tourne le rover à gauche
-  public TurnLeft(): IRoverState {
+  public turnLeft(): IRoverState {
     this.direction = rotateLeft(this.direction);
     return this.getState(false);
   }
 
   // Tourne le rover à droite
-  public TurnRight(): IRoverState {
+  public turnRight(): IRoverState {
     this.direction = rotateRight(this.direction);
     return this.getState(false);
   }
@@ -86,18 +86,18 @@ export class Rover implements IRover {
   // Retourne l'état actuel du rover
   private getState(obstacleDetected: boolean): IRoverState {
     return {
-      GetPositionX: () => this.x,
-      GetPositionY: () => this.y,
-      GetOrientation: () => this.direction,
-      ObstacleDetected: obstacleDetected, // Booléen
+      getPositionX: () => this.x,
+      getPositionY: () => this.y,
+      getOrientation: () => this.direction,
+      obstacleDetected: obstacleDetected, // Booléen
     };
   }
 
   // Exécute une suite de commandes et s'arrête en cas d'obstacle
   public executeCommands(commands: string): IRoverState {
     for (const command of commands) {
-        const state = this.executeSingleCommand(command); // Utilisation correcte de executeSingleCommand()
-        if (state.ObstacleDetected) {
+        const state = this.executeCommand(command); // Utilisation correcte de executeCommand()
+        if (state.obstacleDetected) {
             return state; // Arrêt immédiat si obstacle
         }
     }
@@ -105,12 +105,12 @@ export class Rover implements IRover {
   }
 
   // Exécute une seule commande
-  private executeSingleCommand(command: string): IRoverState {
+  private executeCommand(command: string): IRoverState {
     switch (command) {
-      case 'F': return this.MoveForward();
-      case 'B': return this.MoveBackward();
-      case 'L': return this.TurnLeft();
-      case 'R': return this.TurnRight();
+      case 'F': return this.moveForward();
+      case 'B': return this.moveBackward();
+      case 'L': return this.turnLeft();
+      case 'R': return this.turnRight();
       default: throw new Error(`Commande invalide: ${command}`);
     }
   }

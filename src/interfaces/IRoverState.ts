@@ -1,8 +1,8 @@
 import { Orientation } from "../models/Orientation";
 
 export interface IRoverState {
-    GetPositionX(): number;
-    GetPositionY(): number;
-    GetOrientation(): Orientation;
-    ObstacleDetected: boolean;
+    getPositionX(): number;
+    getPositionY(): number;
+    getOrientation(): Orientation;
+    obstacleDetected: boolean;
 }
