@@ -6,13 +6,15 @@ import { IMap } from "../interfaces/IMap";
 export class Map implements IMap {
     private readonly width: number;  // Largeur de la carte (en unités)
     private readonly height: number; // Hauteur de la carte (en unités)
+    private readonly obstacles: Set<string>; 
 
     // Le constructeur initialise la carte avec une largeur et une hauteur définies.
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, obstacles: { x: number, y: number }[] = []) {
         this.width = width;
         this.height = height;
+        this.obstacles = new Set(obstacles.map(({ x, y }) => `${x},${y}`)); 
     }
-
+    
     // Retourne la largeur de la carte.
     getWidth(): number {
         return this.width;
@@ -28,6 +30,11 @@ export class Map implements IMap {
         const valeurRéduiteSignée = (num % mod) % -mod;
         const valeurNonSignée = valeurRéduiteSignée + mod;
         return valeurNonSignée % mod;
+    }
+
+    // Vérifie si la position contient un obstacle
+    public isObstacle(x: number, y: number): boolean {
+        return this.obstacles.has(`${x},${y}`);
     }
 
     // La méthode `wrapPosition` gère le déplacement d'un rover au-delà des limites de la carte.

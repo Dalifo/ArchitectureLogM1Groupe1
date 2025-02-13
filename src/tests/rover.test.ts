@@ -4,8 +4,6 @@ import { Map } from '../models/Map';
 
 describe('Rover', () => {
 
-  
-
     test('should move forward', () => {
         const map: Map = new Map(5, 5);
         const rover: Rover = new Rover(0, 0, Orientation.North, map);
@@ -79,4 +77,68 @@ describe('Rover', () => {
         rover.MoveForward(); // y = 0
         expect(rover.getPosition()).toEqual({ x: 0, y: 0 });
     })
+
+
+    // NOUVEAUX TESTS : PARTIE OBSTACLES
+
+    test('should process a sequence of commands and stop at an obstacle', () => {
+        // Ajout d'un obstacle à la position (0, 2)
+        const map: Map = new Map(5, 5, [{ x: 0, y: 2 }]);
+        const rover: Rover = new Rover(0, 0, Orientation.North, map);
+
+        // Suite de commandes: Avancer 3 fois (le rover s'arrêtera à y = 2 à cause de l'obstacle)
+        rover.executeCommands('FFF');
+        
+        // Le rover devrait s'arrêter à y = 1 (juste avant l'obstacle)
+        expect(rover.getPosition()).toEqual({ x: 0, y: 1 });
+
+        // Le rover signale l'obstacle
+        expect(rover.hasObstacle()).toBe(true);
+    });
+
+    test('should continue processing valid commands before hitting an obstacle', () => {
+        // Ajout d'un obstacle à la position (2, 2)
+        const map: Map = new Map(5, 5, [{ x: 2, y: 2 }]);
+        const rover: Rover = new Rover(0, 0, Orientation.North, map);
+
+        // Suite de commandes: Avancer deux fois, tourner à droite, avancer encore
+        rover.executeCommands('FFRFF');
+
+        // Le rover devrait se trouver en (2, 1) car il ne peut pas dépasser l'obstacle
+        expect(rover.getPosition()).toEqual({ x: 2, y: 1 });
+        
+        // Le rover signale l'obstacle
+        expect(rover.hasObstacle()).toBe(true);
+    });
+
+    test('should not cancel previous commands when an obstacle is encountered', () => {
+        // Ajout d'un obstacle à la position (1, 1)
+        const map: Map = new Map(5, 5, [{ x: 1, y: 1 }]);
+        const rover: Rover = new Rover(0, 0, Orientation.East, map);
+
+        // Suite de commandes: Tourner à droite et avancer, jusqu'à l'obstacle
+        rover.executeCommands('RFF');
+        
+        // Le rover devrait avancer jusqu'à (1, 0) puis s'arrêter
+        expect(rover.getPosition()).toEqual({ x: 1, y: 0 });
+
+        // Une tentative d'avancer le placerait sur l'obstacle, donc il s'arrête avant
+        expect(rover.hasObstacle()).toBe(true);
+    });
+
+    test('should report the position when encountering an obstacle', () => {
+        // Ajout d'un obstacle à la position (3, 3)
+        const map: Map = new Map(5, 5, [{ x: 3, y: 3 }]);
+        const rover: Rover = new Rover(0, 0, Orientation.North, map);
+
+        // Suite de commandes: Avancer 3 fois, tourner à droite, puis avancer vers l'obstacle
+        rover.executeCommands('FFFRRFFF');
+
+        // Le rover s'arrête à la position (3, 2) avant l'obstacle
+        expect(rover.getPosition()).toEqual({ x: 3, y: 2 });
+
+        // Le rover signale la position de l'obstacle
+        expect(rover.reportObstacle()).toEqual({ x: 3, y: 3 });
+    });
+
 });

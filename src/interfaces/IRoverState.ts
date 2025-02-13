@@ -4,4 +4,5 @@ export interface IRoverState {
     GetPositionX(): number;
     GetPositionY(): number;
     GetOrientation(): Orientation;
+    ObstacleDetected: boolean;
 }
