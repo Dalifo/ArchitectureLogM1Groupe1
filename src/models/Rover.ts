@@ -16,11 +16,6 @@ export class Rover implements IRover {
     this.map = map;
   }
 
-  // Vérifie s'il y a un obstacle à la position donnée
-  private isObstacle(x: number, y: number): boolean {
-    return this.map.isObstacle(x, y);
-  }
-
   // Calcule la prochaine position du rover
   private calculateNewPosition(direction: Orientation, step: number): { x: number; y: number } {
     let newX = this.x;
@@ -44,25 +39,15 @@ export class Rover implements IRover {
     return this.map.wrapPosition(newX, newY);
   }
 
-  // Met à jour la position du rover
-  private updatePosition(newPosition: { x: number; y: number }): void {
-    this.x = newPosition.x;
-    this.y = newPosition.y;
-  }
-
   // Fonction privée pour déplacer le rover
   private move(step: number): IRoverState {
-    // Vérification AVANT de bouger pour éviter d'aller trop loin
     const nextPosition = this.calculateNewPosition(this.direction, step);
+    const validatedPosition = this.map.getNextValidPosition(this.x, this.y, nextPosition.x, nextPosition.y);
 
-    if (this.isObstacle(nextPosition.x, nextPosition.y)) {
-        console.warn(`Obstacle détecté à (${nextPosition.x}, ${nextPosition.y}) ! Arrêt du rover.`);
-        return this.getState(true); // On retourne l'état en signalant l'obstacle
-    }
+    this.x = validatedPosition.x;
+    this.y = validatedPosition.y;
 
-    // On met à jour la position SEULEMENT si aucun obstacle n'est détecté
-    this.updatePosition(nextPosition);
-    return this.getState(false);
+    return this.getState(validatedPosition.obstacle);
   }
   
   // Déplace le rover d'une case vers l'avant

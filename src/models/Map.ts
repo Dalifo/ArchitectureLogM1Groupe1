@@ -45,4 +45,14 @@ export class Map implements IMap {
             y: this.modulo(y, this.height)
         };
     }
+
+    public getNextValidPosition(x: number, y: number, newX: number, newY: number): { x: number; y: number; obstacle: boolean } {
+        const wrappedPosition = this.wrapPosition(newX, newY);
+        
+        if (this.isObstacle(wrappedPosition.x, wrappedPosition.y)) {
+            return { x, y, obstacle: true }; // Reste sur place si obstacle détecté
+        }
+        
+        return { x: wrappedPosition.x, y: wrappedPosition.y, obstacle: false };
+    }
 }
