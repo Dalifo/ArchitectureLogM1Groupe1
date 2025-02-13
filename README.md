@@ -1,6 +1,6 @@
 # Mars Rover Project
 
-![Mars Rover](https://lejournal.cnrs.fr/sites/default/files/styles/visuel_principal/public/assets/images/perseverance_mars_vp.jpg) <!-- Vous pouvez remplacer par un lien d'image ou supprimer cette ligne -->
+![Mars Rover](https://lejournal.cnrs.fr/sites/default/files/styles/visuel_principal/public/assets/images/perseverance_mars_vp.jpg)
 
 ## Description
 
@@ -35,7 +35,7 @@ Assurez-vous d'avoir les éléments suivants installés sur votre machine :
    
 2. Accédez au répertoire du projet :
     ```bash
-    cd mars-rover-ts
+    cd ArchitectureLogM1Groupe1
     ```
 
 3. Installez les dépendances du projet :
@@ -68,7 +68,7 @@ Le rover va se déplacer en fonction des commandes entrées, et la console affic
 
 ## Arborescence du projet
 ```bash
-mars-rover-ts/
+ArchitectureLogM1Groupe1/
 ├── src/
 │   ├── index.ts           # Fichier principal
 │   ├── Rover.ts           # Classe représentant le rover
@@ -76,6 +76,7 @@ mars-rover-ts/
 │   ├── CommandParser.ts   # Gestion des commandes utilisateur
 ├── tests/                 # Dossier contenant les tests
 ├── package.json           # Fichier de configuration du projet
+├── jest.config.js         # Fichier de configuration de jest
 └── README.md              # Ce fichier
 ```
 
@@ -90,20 +91,14 @@ Les tests sont écrits avec Jest et couvrent la logique de navigation et de gest
 ## Technologies utilisées
 - TypeScript : Langage principal utilisé pour écrire le projet.
 - Jest : Framework pour les tests unitaires.
-- ESLint : Outil de linting pour garder un code propre et cohérent.
-
-## Contribuer
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer au projet, veuillez suivre les étapes suivantes :
-
-1. Fork le projet.
-2. Créez une branche avec un nom descriptif (git checkout -b feature-nouvelle-fonctionnalite).
-3. Faites vos modifications et commitez-les (git commit -m 'Ajout d'une nouvelle fonctionnalité').
-4. Poussez sur votre branche (git push origin feature-nouvelle-fonctionnalite).
-5. Créez une Pull Request pour révision.
 
 
 ## Auteurs
-Lucas GILLET - Développeur principal
+Florian MONDAUT
+Victor DALAMEL DE BOURNET
+Charline HEUGUET
+Vincent-Antoine COMPARATO
+Lucas GILLET
 
 ## Licence
 Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
