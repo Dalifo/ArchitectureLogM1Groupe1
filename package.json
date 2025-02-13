@@ -14,5 +14,7 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.5.3"
   },
-  "private": true
+  "private": true,
+  "type": "module"
+
 }
