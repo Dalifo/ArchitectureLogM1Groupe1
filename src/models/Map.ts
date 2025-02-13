@@ -1,4 +1,6 @@
 import { IMap } from "../interfaces/IMap";
+// ENTITE car possede un état (dimension et obstacle) et un comportement (gestion du déplacement, verif des obstacles)
+
 
 // La classe `Map` représente une carte rectangulaire sur laquelle évolue un rover.
 // Elle définit les dimensions de la carte et fournit une fonctionnalité de "toric wrapping",

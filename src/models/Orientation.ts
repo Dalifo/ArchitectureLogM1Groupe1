@@ -1,3 +1,6 @@
+// OBJET VALEUR car defini par ses attributs, immuable et pas d'identité unique
+
+
 // L'énumération `Orientation` représente les quatre directions cardinales
 // sous forme de valeurs littérales (`N` pour North, `E` pour East, etc.).
 // Cela permet une meilleure lisibilité et évite les erreurs dues à des valeurs arbitraires.

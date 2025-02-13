@@ -3,6 +3,7 @@ import { Orientation, rotateLeft, rotateRight } from "../models/Orientation";
 import { IMap } from "../interfaces/IMap";
 import { IRoverState } from "../interfaces/IRoverState";
 
+// ENTITE car cycle de vie (creation, déplacement, rota, detection d'obstacle), comportement actif, et interagit avec d'autres composants
 export class Rover implements IRover {
   private x: number;
   private y: number;
