@@ -17,6 +17,7 @@ export class Rover implements IRover {
     this.map = map;
   }
 
+  // BAS NIVEAU
   // Calcule la prochaine position du rover
   private calculateNewPosition(direction: Orientation, step: number): { x: number; y: number } {
     let newX = this.x;
@@ -40,6 +41,7 @@ export class Rover implements IRover {
     return this.map.wrapPosition(newX, newY);
   }
 
+  // BAS NIVEAU
   // Fonction privée pour déplacer le rover
   private move(step: number): IRoverState {
     const nextPosition = this.calculateNewPosition(this.direction, step);
@@ -51,38 +53,45 @@ export class Rover implements IRover {
     return this.getState(validatedPosition.obstacle);
   }
   
+  // MOYEN / BAS NIVEAU 
   // Déplace le rover d'une case vers l'avant
   public moveForward(): IRoverState {
     return this.move(1);
   }
 
+  // MOYEN / BAS NIVEAU 
   // Déplace le rover d'une case vers l'arrière
   public moveBackward(): IRoverState {
     return this.move(-1);
   }
 
+  // MOYEN / BAS NIVEAU 
   // Tourne le rover à gauche
   public turnLeft(): IRoverState {
     this.direction = rotateLeft(this.direction);
     return this.getState(false);
   }
 
+  // MOYEN / BAS NIVEAU 
   // Tourne le rover à droite
   public turnRight(): IRoverState {
     this.direction = rotateRight(this.direction);
     return this.getState(false);
   }
 
+  // BAS NIVEAU
   // Retourne la position actuelle du rover
   public getPosition(): { x: number; y: number } {
     return { x: this.x, y: this.y };
   }
 
+  // BAS NIVEAU
   // Retourne la direction actuelle du rover
   public getDirection(): Orientation {
     return this.direction;
   }
 
+  // BAS NIVEAU
   // Retourne l'état actuel du rover
   private getState(obstacleDetected: boolean): IRoverState {
     return {
@@ -93,6 +102,7 @@ export class Rover implements IRover {
     };
   }
 
+  // HAUT NIVEAU => orchestre les autres fonctions
   // Exécute une suite de commandes et s'arrête en cas d'obstacle
   public executeCommands(commands: string): IRoverState {
     for (const command of commands) {
@@ -104,6 +114,7 @@ export class Rover implements IRover {
     return this.getState(false); // Retourne l'état final s'il n'y a pas d'obstacle
   }
 
+  // MOYEN / HAUT => fait la liaison entre les commandes et les actions
   // Exécute une seule commande
   private executeCommand(command: string): IRoverState {
     switch (command) {

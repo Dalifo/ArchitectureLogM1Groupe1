@@ -14,6 +14,8 @@ export enum Orientation {
 // La fonction `rotateLeft` permet de faire pivoter une orientation vers la gauche 
 // (sens antihoraire). Par exemple, `North` devient `West`, `West` devient `South`, etc.
 // Cela est réalisé avec un `switch` qui renvoie la nouvelle orientation correspondante.
+
+//Niveau Intermediaire dans le cadre d'un rover (car c'est une brique reutilisable)
 export function rotateLeft(orientation: Orientation): Orientation {
     switch (orientation) {
         case Orientation.North: return Orientation.West;
@@ -27,6 +29,8 @@ export function rotateLeft(orientation: Orientation): Orientation {
 // Elle fait pivoter une orientation vers la droite (sens horaire). Par exemple, 
 // `North` devient `East`, `East` devient `South`, etc.
 // Comme pour `rotateLeft`, un `switch` est utilisé pour retourner la nouvelle direction.
+
+//Niveau Intermediaire dans le cadre d'un rover (car c'est une brique reutilisable)
 export function rotateRight(orientation: Orientation): Orientation {
     switch (orientation) {
         case Orientation.North: return Orientation.East;
@@ -35,3 +39,7 @@ export function rotateRight(orientation: Orientation): Orientation {
         case Orientation.West: return Orientation.North;
     }
 }
+
+
+//Ce sont des fonctions intermédiaires car elles encapsulent
+//une petite logique réutilisable qui sera utilisée par des fonctions de plus haut niveau.
