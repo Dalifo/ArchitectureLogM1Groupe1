@@ -1,3 +1,5 @@
+type Position = { x: number; y: number };
+
 import { IMap } from "../interfaces/IMap";
 // ENTITE car possede un état (dimension et obstacle) et un comportement (gestion du déplacement, verif des obstacles)
 
@@ -11,7 +13,7 @@ export class Map implements IMap {
     private readonly obstacles: Set<string>; 
 
     // Le constructeur initialise la carte avec une largeur et une hauteur définies.
-    constructor(width: number, height: number, obstacles: { x: number, y: number }[] = []) {
+    constructor(width: number, height: number, obstacles: Position[] = []) {
         this.width = width;
         this.height = height;
         this.obstacles = new Set(obstacles.map(({ x, y }) => `${x},${y}`)); 
@@ -48,7 +50,7 @@ export class Map implements IMap {
     // Niveau : intermédiaire à haut niveau car applique une transformation torique (gestion du passage à travers les bords).
     // La méthode `wrapPosition` gère le déplacement d'un rover au-delà des limites de la carte.
     // Utilise `this.modulo` pour éviter les problèmes avec les valeurs négatives.
-    wrapPosition(x: number, y: number): { x: number; y: number } {
+    private wrapPosition(x: number, y: number): { x: number; y: number } {
         return {
             x: this.modulo(x, this.width),
             y: this.modulo(y, this.height)

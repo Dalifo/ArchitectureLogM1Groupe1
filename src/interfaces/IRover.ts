@@ -5,4 +5,5 @@ export interface IRover {
     moveBackward(): IRoverState;
     turnLeft(): IRoverState;
     turnRight(): IRoverState;
+    getPosition(): { x: number; y: number };
 }
