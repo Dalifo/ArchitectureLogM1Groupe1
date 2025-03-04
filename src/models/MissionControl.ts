@@ -1,5 +1,5 @@
 
-import { IRover } from "../interfaces/IRover";
+import { IRover } from "../interfaces/IRover.js";
 
 class MissionControl {
   private rover: IRover;

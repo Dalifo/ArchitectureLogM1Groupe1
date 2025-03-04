@@ -1,4 +1,4 @@
-import { IRoverState } from "./IRoverState";
+import { IRoverState } from "./IRoverState.js";
 
 export interface IRover {
     moveForward(): IRoverState;

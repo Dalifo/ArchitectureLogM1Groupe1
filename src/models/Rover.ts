@@ -1,7 +1,7 @@
-import { IRover } from "../interfaces/IRover";
-import { Orientation, rotateLeft, rotateRight } from "../models/Orientation";
-import { IMap } from "../interfaces/IMap";
-import { IRoverState } from "../interfaces/IRoverState";
+import { IRover } from "../interfaces/IRover.js";
+import { Orientation, rotateLeft, rotateRight } from "../models/Orientation.js";
+import { IMap } from "../interfaces/IMap.js";
+import { IRoverState } from "../interfaces/IRoverState.js";
 
 // ENTITE car cycle de vie (creation, déplacement, rota, detection d'obstacle), comportement actif, et interagit avec d'autres composants
 export class Rover implements IRover {
