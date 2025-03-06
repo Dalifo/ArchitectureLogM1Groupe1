@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Mars Rover simulation with a toroidal map",
   "main": "dist/main.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/main.js",
@@ -14,7 +15,5 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.5.3"
   },
-  "private": true,
-  "type": "module"
-
+  "private": true
 }

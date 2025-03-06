@@ -44,7 +44,12 @@ Assurez-vous d'avoir les éléments suivants installés sur votre machine :
     npm install
     ```
 
-4. Lancez la simulation :
+4. Compilez le projet TypeScript :
+    ```bash
+   npx tsc
+    ```
+
+5. Lancez la simulation :
     ```bash
     npm start
     ```
