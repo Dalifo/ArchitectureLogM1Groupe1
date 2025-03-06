@@ -1,4 +1,4 @@
-import { Orientation } from "../models/Orientation.js";
+import { Orientation } from "./Orientation.js";
 
 export interface IRoverState {
     getOrientation(): Orientation;

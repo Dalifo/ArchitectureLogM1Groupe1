@@ -1,6 +1,6 @@
-import { Rover } from '../models/Rover.js';
-import { Orientation } from '../models/Orientation.js';
-import { Map } from '../models/Map.js';
+import { Rover } from '../rover/Rover.js';
+import { Orientation } from '../rover/Orientation.js';
+import { Map } from '../rover/Map.js';
 
 describe('Rover', () => {
     test('should move forward', () => {

@@ -1,5 +1,5 @@
 
-import { IRover } from "../interfaces/IRover.js";
+import { IRover } from "../rover/IRover.js";
 
 class MissionControl {
   private rover: IRover;
@@ -8,7 +8,6 @@ class MissionControl {
     this.rover = rover;
   }
 
-  // Exécute une commande sur le rover
   public sendCommand(command: string) {
     switch (command) {
       case "F":

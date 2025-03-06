@@ -1,6 +1,6 @@
-import { Rover } from "./models/Rover.js";
-import { Orientation } from "./models/Orientation.js";
-import { Map } from "./models/Map.js";
+import { Rover } from "./rover/Rover.js";
+import { Orientation } from "./rover/Orientation.js";
+import { Map } from "./rover/Map.js";
 
 const world = new Map(10, 10);  // Carte 10x10
 const rover = new Rover(0, 0, Orientation.North, world);
