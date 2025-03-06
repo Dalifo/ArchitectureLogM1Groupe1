@@ -1,6 +1,6 @@
 import { IRover } from "./IRover.js";
 import { Orientation, rotateLeft, rotateRight } from "./Orientation.js";
-import { IMap } from "../interfaces/IMap.js";
+import { IMap } from "./IMap.js";
 import { IRoverState } from "./IRoverState.js";
 
 // ENTITE car cycle de vie (creation, déplacement, rota, detection d'obstacle), comportement actif, et interagit avec d'autres composants

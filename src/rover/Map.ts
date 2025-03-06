@@ -1,6 +1,6 @@
 type Position = { x: number; y: number };
 
-import { IMap } from "../interfaces/IMap.js";
+import { IMap } from "./IMap.js";
 // ENTITE car possede un état (dimension et obstacle) et un comportement (gestion du déplacement, verif des obstacles)
 
 
