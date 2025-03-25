@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte du Rover</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+
+    <div id="map-container">
+        <pre id="map">Connexion en cours...</pre>
+    </div>
+
+    <div id="controls-container">
+        <div id="controls">
+            <div class="empty"></div>
+            <button onclick="sendCommand('F')">⬆</button>
+            <div class="empty"></div>
+
+            <button onclick="sendCommand('L')">⬅</button>
+            <button onclick="sendCommand('B')">⬇</button>
+            <button onclick="sendCommand('R')">➡</button>
+        </div>
+    </div>
+
+    <script>
+        const socket = new WebSocket("ws://localhost:3001");
+
+        function sendCommand(command) {
+            socket.send(command);
+        }
+
+        socket.onopen = () => {
+            console.log("WebSocket connecté !");
+            document.getElementById("map").textContent = "Carte en attente de mise à jour...";
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("📩 Données reçues via WebSocket :", data);
+
+            if (data.type === "map") {
+                document.getElementById("map").textContent = data.mapVisualization;
+            } else if (data.type === "success") {
+                console.log("Commande exécutée :", data.message);
+            } else if (data.type === "error") {
+                console.error("Erreur :", data.error);
+            }
+        };
+
+        document.addEventListener("keydown", (event) => {
+            const key = event.key.toUpperCase();
+
+            switch (key) {
+                case "Z":
+                case "ARROWUP":
+                    sendCommand("F");
+                    break;
+                case "S":
+                case "ARROWDOWN":
+                    sendCommand("B");
+                    break;
+                case "Q":
+                case "ARROWLEFT":
+                    sendCommand("L");
+                    break;
+                case "D":
+                case "ARROWRIGHT":
+                    sendCommand("R");
+                    break;
+                default:
+                    break;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

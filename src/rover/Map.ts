@@ -1,4 +1,4 @@
-type Position = { x: number; y: number };
+export type Position = { x: number; y: number };
 
 import { IMap } from "./IMap.js";
 // ENTITE car possede un état (dimension et obstacle) et un comportement (gestion du déplacement, verif des obstacles)
@@ -50,7 +50,7 @@ export class Map implements IMap {
     // Niveau : intermédiaire à haut niveau car applique une transformation torique (gestion du passage à travers les bords).
     // La méthode `wrapPosition` gère le déplacement d'un rover au-delà des limites de la carte.
     // Utilise `this.modulo` pour éviter les problèmes avec les valeurs négatives.
-    private wrapPosition(x: number, y: number): { x: number; y: number } {
+    private wrapPosition(x: number, y: number): Position {
         return {
             x: this.modulo(x, this.width),
             y: this.modulo(y, this.height)

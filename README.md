@@ -16,6 +16,8 @@ Le but de ce projet est de simuler des algorithmes de navigation, de gestion d'o
 - Système de gestion des collisions et détection d'obstacles.
 - Mode de simulation par étapes avec affichage de la position actuelle du rover.
 - Suivi et enregistrement des coordonnées et du parcours du rover.
+- Interface web via WebSockets pour visualiser et contrôler le rover.
+- Interface en ligne de commande pour visualiser et contrôler le rover.
 
 ## Prérequis
 
@@ -44,18 +46,16 @@ Assurez-vous d'avoir les éléments suivants installés sur votre machine :
     npm install
     ```
 
-4. Compilez le projet TypeScript :
+4. Lancez la simulation :
     ```bash
-   npx tsc
-    ```
-
-5. Lancez la simulation :
-    ```bash
-    npm start
+   npx run start
     ```
 
 ## Utilisation
-Une fois que la simulation est démarrée, vous pouvez interagir avec le rover en entrant une série de commandes. Les commandes possibles sont les suivantes :
+Une fois que la simulation est démarrée, vous pouvez interagir avec le rover de deux façons :
+
+### Via l'interface en ligne de commande
+Une fenêtre CMD devrait s'ouvrir. Vous pouvez alors entrer une série de commandes. Les commandes possibles sont les suivantes :
 
 - ```F``` : Avancer d'une case
 - ```B``` : Reculer d'une case
@@ -71,18 +71,38 @@ FFF R FF
 
 Le rover va se déplacer en fonction des commandes entrées, et la console affichera la nouvelle position du rover.
 
+### Via l'interface web
+Le projet utilise des WebSockets pour permettre une interaction via navigateur web :
+
+- http://localhost:3000 : Accès visuel et contrôle du rover (géré par ActiveListener)
+- http://localhost:3000/map : Accès à la carte actuelle
+- http://localhost:3001 : Interface passive pour la surveillance (géré par PassiveListener)
+
 ## Arborescence du projet
 ```bash
 ArchitectureLogM1Groupe1/
+├── public/                     # Dossier contenant les fichiers publics
 ├── src/
-│   ├── index.ts           # Fichier principal
-│   ├── Rover.ts           # Classe représentant le rover
-│   ├── Grid.ts            # Classe représentant la surface martienne
-│   ├── CommandParser.ts   # Gestion des commandes utilisateur
-├── tests/                 # Dossier contenant les tests
-├── package.json           # Fichier de configuration du projet
-├── jest.config.js         # Fichier de configuration de jest
-└── README.md              # Ce fichier
+│   ├── missionControl/         # Dossier du module MissionControl
+│   │   ├── MissionControl.ts
+│   ├── networkCommunication/   # Dossier du module NetworkCommunication
+│   │   ├── ActiveListener.ts   # Gestion du serveur WebSocket sur port 3000
+│   │   ├── PassiveListener.ts  # Gestion du serveur WebSocket sur port 3001
+│   │   ├── TerminalControl.ts  # Gestion du lancement du terminal de contrôle
+│   │   ├── TerminalControlListening.ts  # Gestion de l'écoute du terminal de contrôle à l'aide des websockets
+│   ├── rover/                  # Dossier du module Rover
+│   │   ├── IMap.ts
+│   │   ├── IRover.ts
+│   │   ├── IRoverState.ts
+│   │   ├── Map.ts
+│   │   ├── Orientation.ts
+│   │   ├── Rover.ts
+│   ├── main.ts                 # Fichier principal
+├── tests/                      # Dossier contenant les tests
+├── jest.config.js              # Fichier de configuration de jest
+├── package.json                # Fichier de configuration du projet
+├── README.md              
+└── tsconfig.json               # Configuration du typescript
 ```
 
 ## Tests
@@ -96,14 +116,15 @@ Les tests sont écrits avec Jest et couvrent la logique de navigation et de gest
 ## Technologies utilisées
 - TypeScript : Langage principal utilisé pour écrire le projet.
 - Jest : Framework pour les tests unitaires.
-
+- WebSockets : Communication en temps réel entre le serveur et les clients web.
+- Express : Framework web pour servir l'interface utilisateur.
 
 ## Auteurs
-Florian MONDAUT
-Victor DALAMEL DE BOURNET
-Charline HEUGUET
-Vincent-Antoine COMPARATO
-Lucas GILLET
+- Florian MONDAUT
+- Victor DALAMEL DE BOURNET
+- Charline HEUGUET
+- Vincent-Antoine COMPARATO
+- Lucas GILLET
 
 ## Licence
 Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
