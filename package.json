@@ -5,15 +5,20 @@
   "main": "dist/main.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/main.js",
+    "build": "npx tsc",
+    "start": "npx tsc && concurrently \"node dist/networkCommunication/PassiveListener.js\" \"node dist/networkCommunication/TerminalControl.js\"",
     "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/ws": "^8.18.0",
+    "concurrently": "^9.1.2",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.5.3"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "ws": "^8.18.1"
+  }
 }

@@ -1,29 +1,24 @@
+import { Rover } from "../rover/Rover.js";
 
-import { IRover } from "../rover/IRover.js";
+export class MissionControl {
+  private readonly rover: Rover;
 
-class MissionControl {
-  private rover: IRover;
-
-  constructor(rover: IRover) {
+  constructor(rover: Rover) {
     this.rover = rover;
   }
 
-  public sendCommand(command: string) {
-    switch (command) {
-      case "F":
-        return this.rover.moveForward();
-      case "B":
-        return this.rover.moveBackward();
-      case "L":
-        return this.rover.turnLeft();
-      case "R":
-        return this.rover.turnRight();
-      case "POSITION":
-        return this.rover.getPosition();
-      default:
-        throw new Error("Commande invalide");
+  public executeCommands(commands: string) {
+    const result = this.rover.executeCommands(commands);
+    if (result.obstacleDetected) {
+      return {
+        type: "error",
+        message: `Obstacle rencontré à la position (${this.rover.getPosition().x}, ${this.rover.getPosition().y})`
+      };
     }
+
+    return {
+      type: "success",
+      message: "Commandes exécutées avec succès"
+    };
   }
 }
-
-export { MissionControl };

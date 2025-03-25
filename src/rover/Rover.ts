@@ -2,6 +2,7 @@ import { IRover } from "./IRover.js";
 import { Orientation, rotateLeft, rotateRight } from "./Orientation.js";
 import { IMap } from "./IMap.js";
 import { IRoverState } from "./IRoverState.js";
+import { Position } from "./Map.js";
 
 // ENTITE car cycle de vie (creation, déplacement, rota, detection d'obstacle), comportement actif, et interagit avec d'autres composants
 export class Rover implements IRover {
@@ -22,7 +23,7 @@ export class Rover implements IRover {
   private calculateNewPosition(
     direction: Orientation,
     step: number
-  ): { x: number; y: number } {
+  ): Position {
     let newX = this.x;
     let newY = this.y;
 
@@ -97,7 +98,7 @@ export class Rover implements IRover {
 
   // BAS NIVEAU
   // Retourne la position actuelle du rover
-  public getPosition(): { x: number; y: number } {
+  public getPosition(): Position {
     return { x: this.x, y: this.y };
   }
 
