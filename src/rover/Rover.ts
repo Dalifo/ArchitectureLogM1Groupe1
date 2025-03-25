@@ -1,10 +1,9 @@
-import { IRover } from "./IRover.js";
-import { Orientation, rotateLeft, rotateRight } from "./Orientation.js";
 import { IMap } from "./IMap.js";
+import { IRover } from "./IRover.js";
 import { IRoverState } from "./IRoverState.js";
 import { Position } from "./Map.js";
+import { Orientation, rotateLeft, rotateRight } from "./Orientation.js";
 
-// ENTITE car cycle de vie (creation, déplacement, rota, detection d'obstacle), comportement actif, et interagit avec d'autres composants
 export class Rover implements IRover {
   private x: number;
   private y: number;
@@ -18,8 +17,6 @@ export class Rover implements IRover {
     this.map = map;
   }
 
-  // BAS NIVEAU
-  // Calcule la prochaine position du rover
   private calculateNewPosition(
     direction: Orientation,
     step: number
@@ -42,7 +39,6 @@ export class Rover implements IRover {
         break;
     }
 
-    // Utiliser getNextValidPosition pour gérer le wrapping et vérifier les obstacles
     const validatedPosition = this.map.getNextValidPosition(
       this.x,
       this.y,
@@ -53,8 +49,6 @@ export class Rover implements IRover {
     return { x: validatedPosition.x, y: validatedPosition.y };
   }
 
-  // BAS NIVEAU
-  // Fonction privée pour déplacer le rover
   private move(step: number): IRoverState {
     const nextPosition = this.calculateNewPosition(this.direction, step);
     const validatedPosition = this.map.getNextValidPosition(
@@ -70,68 +64,50 @@ export class Rover implements IRover {
     return this.getState(validatedPosition.obstacle);
   }
 
-  // HAUT NIVEAU => permet au rover de bouger => proche de l'utilisateur
-  // Déplace le rover d'une case vers l'avant
   public moveForward(): IRoverState {
     return this.move(1);
   }
 
-  // HAUT NIVEAU => permet au rover de bouger => proche de l'utilisateur
-  // Déplace le rover d'une case vers l'arrière
   public moveBackward(): IRoverState {
     return this.move(-1);
   }
 
-  // HAUT NIVEAU => permet au rover de bouger => proche de l'utilisateur
-  // Tourne le rover à gauche
   public turnLeft(): IRoverState {
     this.direction = rotateLeft(this.direction);
     return this.getState(false);
   }
 
-  // HAUT NIVEAU => permet au rover de bouger => proche de l'utilisateur
-  // Tourne le rover à droite
   public turnRight(): IRoverState {
     this.direction = rotateRight(this.direction);
     return this.getState(false);
   }
 
-  // BAS NIVEAU
-  // Retourne la position actuelle du rover
   public getPosition(): Position {
     return { x: this.x, y: this.y };
   }
 
-  // BAS NIVEAU
-  // Retourne la direction actuelle du rover
   public getDirection(): Orientation {
     return this.direction;
   }
 
-  // BAS NIVEAU
-  // Retourne l'état actuel du rover
   private getState(obstacleDetected: boolean): IRoverState {
     return {
       getOrientation: () => this.direction,
-      obstacleDetected: obstacleDetected, // Booléen
+      obstacleDetected: obstacleDetected,
     };
   }
 
-  // HAUT NIVEAU => orchestre les autres fonctions => proche de l'utilisateur
-  // Exécute une suite de commandes et s'arrête en cas d'obstacle
   public executeCommands(commands: string): IRoverState {
     for (const command of commands) {
-      const state = this.executeCommand(command); // Utilisation correcte de executeCommand()
+      const state = this.executeCommand(command); 
       if (state.obstacleDetected) {
-        return state; // Arrêt immédiat si obstacle
+        return state;
       }
     }
-    return this.getState(false); // Retourne l'état final s'il n'y a pas d'obstacle
+    return this.getState(false);
   }
 
-  // MOYEN / HAUT => fait la liaison entre les commandes et les actions
-  // Exécute une seule commande
-  private executeCommand(command: string): IRoverState { // => ceci est l'interpréteur
+  private executeCommand(command: string): IRoverState {
     switch (command) {
       case "F":
         return this.moveForward();

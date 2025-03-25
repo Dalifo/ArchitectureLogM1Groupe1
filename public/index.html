@@ -34,20 +34,13 @@
         }
 
         socket.onopen = () => {
-            console.log("WebSocket connecté !");
             document.getElementById("map").textContent = "Carte en attente de mise à jour...";
         };
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log("📩 Données reçues via WebSocket :", data);
-
             if (data.type === "map") {
                 document.getElementById("map").textContent = data.mapVisualization;
-            } else if (data.type === "success") {
-                console.log("Commande exécutée :", data.message);
-            } else if (data.type === "error") {
-                console.error("Erreur :", data.error);
             }
         };
 

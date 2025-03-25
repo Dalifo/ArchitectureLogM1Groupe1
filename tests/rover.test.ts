@@ -4,40 +4,36 @@ import { Map } from '../src/rover/Map.js';
 
 describe('Rover', () => {
     test('should move forward', () => {
-        let map;
+        let map: Map;
         map = new Map(5, 5);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
         const state = rover.moveForward();
         expect(rover.getPosition().x).toBe(0);
         expect(rover.getPosition().y).toBe(1);
-        // expect(state.getPositionX()).toBe(0);
-        // expect(state.getPositionY()).toBe(1);
         expect(state.obstacleDetected).toBe(false);
     });
 
     test('should move forward twice', () => {
-        let map;
+        let map: Map;
         map = new Map(5, 5);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
         rover.moveForward();
         rover.moveForward();
-        // expect(state.getPositionX()).toBe(0);
-        // expect(state.getPositionY()).toBe(2);
         expect(rover.getPosition().x).toBe(0);
         expect(rover.getPosition().y).toBe(2);
     });
 
     test('should turn left', () => {
-        let map;
+        let map: Map;
         map = new Map(5, 5);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
         const state = rover.turnLeft();
@@ -45,10 +41,10 @@ describe('Rover', () => {
     });
 
     test('should turn right', () => {
-        let map;
+        let map: Map;
         map = new Map(5, 5);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
         const state = rover.turnRight();
@@ -56,77 +52,67 @@ describe('Rover', () => {
     });
 
     test('should wrap around the Y-axis when moving backward', () => {
-        let map;
+        let map: Map;
         map = new Map(5, 5);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
         rover.moveBackward();
-        // expect(state.getPositionX()).toBe(0);
-        // expect(state.getPositionY()).toBe(4);
         expect(rover.getPosition().x).toBe(0);
         expect(rover.getPosition().y).toBe(4);
     });
 
     test('should wrap around the X-axis when moving left', () => {
-        let map;
+        let map: Map;
         map = new Map(5, 5);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.West, map);
 
         rover.moveForward();
-        // expect(state.getPositionX()).toBe(4);
-        // expect(state.getPositionY()).toBe(0);
         expect(rover.getPosition().x).toBe(4);
         expect(rover.getPosition().y).toBe(0);
     });
 
     test('should stop when encountering an obstacle', () => {
-        let map;
-        map = new Map(5, 5, [{ x: 0, y: 2 }]); // Obstacle en (0,2)
+        let map: Map;
+        map = new Map(5, 5, [{ x: 0, y: 2 }]); 
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
-        rover.moveForward(); // (0,1)
-        const state = rover.moveForward(); // Devrait s'arrêter à cause de l'obstacle
+        rover.moveForward();
+        const state = rover.moveForward();
 
-        // expect(state.getPositionX()).toBe(0);
-        // expect(state.getPositionY()).toBe(1);
         expect(rover.getPosition().x).toBe(0);
         expect(rover.getPosition().y).toBe(1);
         expect(state.obstacleDetected).toBe(true);
     });
 
     test('should process commands until an obstacle is encountered', () => {
-        let map;
-        map = new Map(5, 5, [{ x: 1, y: 1 }]); // Obstacle en (1,1)
+        let map: Map;
+        map = new Map(5, 5, [{ x: 1, y: 1 }]);
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.East, map);
 
         const state = rover.executeCommands('FLFF');
 
-        // expect(state.getPositionX()).toBe(1);
-        // expect(state.getPositionY()).toBe(0); // Devrait s'arrêter juste avant l'obstacle
         expect(rover.getPosition().x).toBe(1);
         expect(rover.getPosition().y).toBe(0);
         expect(state.obstacleDetected).toBe(true);
     });
 
     test('should report the obstacle position when detected', () => {
-        let map;
-        map = new Map(5, 5, [{ x: 3, y: 3 }]); // Obstacle en (3,3)
+        let map: Map;
+        map = new Map(5, 5, [{ x: 3, y: 3 }]); 
 
-        let rover;
+        let rover: Rover;
         rover = new Rover(0, 0, Orientation.North, map);
 
-        const state = rover.executeCommands('RFFFLFFFF'); // Se dirige vers (3,3)
+        const state = rover.executeCommands('RFFFLFFFF');
 
-        // expect(state.getPositionX()).toBe(3);
-        // expect(state.getPositionY()).toBe(2); // Devrait s'arrêter avant (3,3)
         expect(rover.getPosition().x).toBe(3);
         expect(rover.getPosition().y).toBe(2);
         expect(state.obstacleDetected).toBe(true);
