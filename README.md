@@ -2,6 +2,10 @@
 
 ![Mars Rover](https://lejournal.cnrs.fr/sites/default/files/styles/visuel_principal/public/assets/images/perseverance_mars_vp.jpg)
 
+## Schéma d'architecture
+
+![Schéma d'architecture](./public/Schéma%20Groupe%201.png)
+
 ## Description
 
 Le **Mars Rover Project** est une simulation logicielle en TypeScript qui reproduit les mouvements d'un rover explorant la surface de Mars. Le rover peut se déplacer sur une grille représentant la surface martienne, et peut tourner, avancer ou reculer selon des commandes fournies par l'utilisateur. 
