@@ -1,6 +1,6 @@
 import { WebSocket } from "ws";
 import { Rover } from "../rover/Rover.js";
-import { Map } from "../rover/Map.js";
+import { Map, Position } from "../rover/Map.js";
 
 export function generateRandomObstacles(width: number, height: number, count: number): { x: number, y: number }[] {
     const obstacles: { x: number, y: number }[] = [];
@@ -40,11 +40,6 @@ export function generateMapString(rover: Rover, world: Map): string {
       grid += "\n";
     }
     return grid;
-}
-
-export interface Position {
-    x: number;
-    y: number;
 }
 
 export function checkForObstacle(rover: Rover, world: Map, command: string): Position | null {

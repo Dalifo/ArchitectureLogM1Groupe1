@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "start": "npx tsc && concurrently \"node dist/networkCommunication/PassiveListener.js\" \"node dist/networkCommunication/TerminalControl.js\"",
+    "start": "npx tsc && node dist/main.js",
     "test": "jest"
   },
   "devDependencies": {

@@ -1,20 +1,22 @@
-import { Rover } from "./rover/Rover.js";
-import { Orientation } from "./rover/Orientation.js";
+import { MissionControl } from "./missionControl/MissionControl.js";
+import { createHttpServer } from "./networkCommunication/ActiveListener.js";
+import { startPassiveListener } from "./networkCommunication/PassiveListener.js";
+import { startCommandListeningTerminal } from "./networkCommunication/TerminalControl.js";
 import { Map } from "./rover/Map.js";
+import { Orientation } from "./rover/Orientation.js";
+import { Rover } from "./rover/Rover.js";
+import { generateRandomObstacles } from "./utils/utlis.js";
 
-const world = new Map(10, 10);
+const obstacles = generateRandomObstacles(10, 10, Math.floor(Math.random() * 11));
+
+const world = new Map(10, 10, obstacles);
 const rover = new Rover(0, 0, Orientation.North, world);
+const missionControl = new MissionControl(rover);
 
-console.log(`Initial Position: (${rover.getPosition().x}, ${rover.getPosition().y}) Facing ${rover.getDirection()}`);
+async function startAllServers() {
+    await createHttpServer(rover, world, missionControl); 
+    startPassiveListener(rover, world, missionControl);
+    startCommandListeningTerminal(); 
+}
 
-rover.moveForward();
-console.log(`After Moving Forward: (${rover.getPosition().x}, ${rover.getPosition().y}) Facing ${rover.getDirection()}`);
-
-rover.turnRight();
-console.log(`After Turning Right: (${rover.getPosition().x}, ${rover.getPosition().y}) Facing ${rover.getDirection()}`);
-
-rover.moveForward();
-console.log(`After Moving Forward: (${rover.getPosition().x}, ${rover.getPosition().y}) Facing ${rover.getDirection()}`);
-
-rover.turnLeft();
-console.log(`After Turning Left: (${rover.getPosition().x}, ${rover.getPosition().y}) Facing ${rover.getDirection()}`);
+startAllServers().catch((err) => console.error("Erreur lors du démarrage:", err));
