@@ -86,7 +86,7 @@ export class Rover implements IRover {
     return { x: this.x, y: this.y };
   }
 
-  public getDirection(): Orientation {
+  public getOrientation(): Orientation {
     return this.direction;
   }
 
@@ -95,30 +95,5 @@ export class Rover implements IRover {
       getOrientation: () => this.direction,
       obstacleDetected: obstacleDetected,
     };
-  }
-
-  public executeCommands(commands: string): IRoverState {
-    for (const command of commands) {
-      const state = this.executeCommand(command); 
-      if (state.obstacleDetected) {
-        return state;
-      }
-    }
-    return this.getState(false);
-  }
-
-  private executeCommand(command: string): IRoverState {
-    switch (command) {
-      case "F":
-        return this.moveForward();
-      case "B":
-        return this.moveBackward();
-      case "L":
-        return this.turnLeft();
-      case "R":
-        return this.turnRight();
-      default:
-        throw new Error(`Commande invalide: ${command}`);
-    }
   }
 }

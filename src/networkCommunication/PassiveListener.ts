@@ -11,7 +11,7 @@ export function startPassiveListener(rover: Rover, world: Map, missionControl: M
     const mapData = {
       type: "map",
       mapVisualization: generateMapString(rover, world),
-      roverDirection: rover.getDirection()
+      roverDirection: rover.getOrientation()
     };
     wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {

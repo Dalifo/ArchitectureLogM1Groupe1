@@ -17,7 +17,7 @@ export function generateRandomObstacles(width: number, height: number, count: nu
 
 export function generateMapString(rover: Rover, world: Map): string {
     const position = rover.getPosition();
-    const direction = rover.getDirection();
+    const direction = rover.getOrientation();
     let grid = "";
   
     const directionSymbols: Record<string, string> = {
@@ -44,7 +44,7 @@ export function generateMapString(rover: Rover, world: Map): string {
 
 export function checkForObstacle(rover: Rover, world: Map, command: string): Position | null {
     const position: Position = rover.getPosition();
-    const direction: string = rover.getDirection();
+    const direction: string = rover.getOrientation();
     let newPosition: Position = { ...position };
 
     switch (command) {

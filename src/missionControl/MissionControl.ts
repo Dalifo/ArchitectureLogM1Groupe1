@@ -1,24 +1,27 @@
-import { Rover } from "../rover/Rover.js";
+import { RoverInterpreter } from "../networkCommunication/RoverInterpreter";
+import { IRoverState } from "../rover/IRoverState";
 
 export class MissionControl {
-  private readonly rover: Rover;
+  private readonly roverInterpreter: RoverInterpreter;
 
-  constructor(rover: Rover) {
-    this.rover = rover;
+  constructor(roverInterpreter: RoverInterpreter) {
+    this.roverInterpreter = roverInterpreter;
   }
 
   public executeCommands(commands: string) {
-    const result = this.rover.executeCommands(commands);
-    if (result.obstacleDetected) {
+    const finalState: IRoverState = this.roverInterpreter.executeCommands(commands);
+
+    if (finalState.obstacleDetected) {
       return {
         type: "error",
-        message: `Obstacle rencontré à la position (${this.rover.getPosition().x}, ${this.rover.getPosition().y})`
+        message: `Obstacle rencontré à la position (${finalState.getOrientation()})`
       };
     }
 
     return {
       type: "success",
-      message: "Commandes exécutées avec succès"
+      message: "Commandes exécutées avec succès",
+      finalOrientation: finalState.getOrientation()
     };
   }
 }
